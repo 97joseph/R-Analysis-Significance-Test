@@ -15,7 +15,10 @@ SHOW_SOLUTIONS = TRUE
 Read in the Diamonds data set unless you load a saved workspace from last time.
 
 ```{r, eval=TRUE}
-D.df <- read.csv("Diamonds.csv", header=TRUE, as.is=TRUE)
+
+ D.df <- read_csv("E:/DATA SCIENCE JOBS/R-Analysis Significance Test/Diamonds_2.csv")
+
+
 D.df$Color <- as.factor(D.df$Color)
 D.df$Clarity <- as.factor(D.df$Clarity)
 D.df$Rater <- as.factor(D.df$Rater)
