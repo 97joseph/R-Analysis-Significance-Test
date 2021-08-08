@@ -1,7 +1,5 @@
 ---
 title: "Stat311 Wi 21 R Assignment 4 Tutorial:  CIs and HTs for the Big-5 Parameters"
-author: "Tamre Cardoso"
-date: "02/18/2021"
 output: html_document
 ---
 
@@ -16,7 +14,7 @@ Read in the Diamonds data set unless you load a saved workspace from last time.
 
 ```{r, eval=TRUE}
 
- D.df <- read_csv("E:/DATA SCIENCE JOBS/R-Analysis Significance Test/Diamonds_2.csv")
+ D.df <- read_csv ("E:/DATA SCIENCE JOBS/R-Analysis Significance Test/Diamonds_2.csv")
 
 
 D.df$Color <- as.factor(D.df$Color)
