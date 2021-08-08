@@ -1,0 +1,31 @@
+---
+title: "Stat311 Sp 21 R Assignment 4 Solutions"
+author: ""
+date: ""
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(dplyr)
+library(ggplot2)
+library(BSDA)
+source("Functions.R")
+knitr::opts_chunk$set(echo = TRUE)
+SHOW_SOLUTIONS = TRUE
+```
+Read in the ice cream, birthweight, and cholesterol data sets.
+
+```{r, eval=TRUE}
+IC.df <- read.csv("IceCream.csv", header=TRUE, as.is=TRUE)
+IC.df$Sex <- as.factor(IC.df$Sex)
+IC.df$Flavor <- as.factor(IC.df$Flavor)
+#
+BW.df <- read.csv("BirthWeight.csv", header=TRUE, as.is=TRUE)
+BW.df$Smoker <- as.factor(BW.df$Smoker)
+BW.df$BirthWt <- as.factor(BW.df$BirthWt)
+BW.df$MAgeGT35 <- as.factor(BW.df$MAgeGT35)
+#
+C.df <- read.csv("Cholesterol.csv", header=TRUE, as.is=TRUE)
+C.df$Cereal <- as.factor(C.df$Cereal)
+```
