@@ -156,7 +156,7 @@ We will write the function twoprop.CI to get the confidence interval for a the d
 # in sample 1, x2 = number of successes in sample 2,
 # n2 = total number of observations in sample 2, and 
 # and conf.level. We will default conf.level to 0.95.
-twoprop.CI <- function(x1, n1, x2, n2, conf.level=0.95) {
+twoprop.CI <- function(x1, n1, x2, n2, conf.level=0.05) {
   phat1 <- x1/n1
   qhat1 <- 1 - phat1
   phat2<- x2/n2
@@ -173,27 +173,57 @@ twoprop.CI <- function(x1, n1, x2, n2, conf.level=0.95) {
 ```
 Before we proceed, we should check the large sample conditions: n1 x phat1 > 10, n1 x qhat1 >10, n2 x phat2 > 10, n2 x qhat2 > 10. We will define sample 1 as VVS1 and sample 2 as VVS2. We will consider H colors successes and all other colors failures within VVS1 and VVS2.
 ```{r Check conditions 2 samples}
-(tab2 <- table(D.df$Clarity, D.df$Color))
-sum(tab2[4,]) * tab2[4,5]/sum(tab2[4,]) # n1phat1
-sum(tab2[4,]) * (1- (tab2[4,5]/sum(tab2[4,]))) # n1qhat1
-sum(tab2[5,]) * tab2[5,5]/sum(tab2[5,]) # n2phat2
-sum(tab2[5,]) * (1- (tab2[5,5]/sum(tab2[5,]))) # n2qhat2
+(tab2 <- table(BW.df$Smoker=="0", BW.df$Smoker=="1"))
+
+sum(tab2[4]) * tab2[4,5]/sum(tab2[4,])   # n1phat1
+sum(tab2[4,]) * (1- (tab2[4,5]/sum(tab2[4,])))  # n1qhat1
+sum(tab2[5,]) * tab2[5,5]/sum(tab2[5,])  # n2phat2
+sum(tab2[5,]) * (1- (tab2[5,5]/sum(tab2[5,])))  # n2qhat2
 ```
-The large sample condition holds so we proceed with the confidence 98% interval.
+The large sample condition holds so we proceed with the confidence 5% interval.
 
 ```{r Two Prop CI}
-twoprop.CI(tab2[4,5], sum(tab2[4,]), tab2[5,5], sum(tab2[5,]), conf.level=0.98) 
-```
-
-5. This problem was modified from here. A cross-over trial experiment was used to investigate whether eating oat bran lowered serum cholesterol levels. Twelve individuals were randomly assigned a diet that included either oat bran or corn flakes. After two weeks on the initial diet, serum cholesterol (mmol/L) was measured and then participants were “crossed-over” to the other diet. After two-weeks on the second diet, cholesterol levels were once again recorded.  a. Using a 5% significance level, test the claim that a diet that includes oat bran decreases serum cholesterol. [Use Cornflk – OatBran] b. Construct an appropriate confidence interval that could be used as an equivalent to the test in part (a). [Use Cornflake – OatBran]. Explain your choice and interpret the interval. 
+twoprop.CI(tab2[4,5], sum(tab2[4,]), tab2[5,5], sum(tab2[5,]), conf.level=0.05) 
 ```
 
 
+5. This problem was modified from here. A cross-over trial experiment was used to investigate whether eating oat bran lowered serum cholesterol levels. Twelve individuals were randomly assigned a diet that included either oat bran or corn flakes. After two weeks on the initial diet, serum cholesterol (mmol/L) was measured and then participants were “crossed-over” to the other diet. After two-weeks on the second diet, cholesterol levels were once again recorded. 
 
+a. Using a 5% significance level, test the claim that a diet that includes oat bran decreases serum cholesterol. [Use Cornflk – OatBran]
 
+We will write our own function for a HT for a single population proportion.
+
+```{r oneprop.HT}
+# The three arguments passed to the function are
+# x = number of successes, n = total number of observations
+# and conf.level. We will default conf.level to 0.95.
+oneprop.HT <- function(x, n, pmu=0, alternative="two.sided") {
+  phat <- x/n
+  se.phat <- sqrt(pmu*(1-pmu)/n) 
+  z.score <- (phat - pmu)/se.phat
+  p.value <- 1 - pnorm(abs(z.score)) #upper tail
+  if (alternative == "two.sided") p.value = 2*p.value
+  result <- cbind(phat = phat, zStat = z.score, pValue = p.value)
+  return(result)
+}
 ```
+Let's conduct a hypothesis test to determine if the population proportion of D colored diamonds is different than 10%, using a 1% significance level. Since this is a hypothesis test, the large enough conditions that must hold are n x p0 > 10 and n x q0 > 10. Here n = 308 and p0 = 0.10. Clearly n x p0 > 10, which means n x q0 > 10. We can continue since the large sample conditions are met. 
 
- 6. In clinical experiments involving different groups of independent samples, it is important that the groups be similar in the important ways that affect the experiment. In an experiment designed to test the effectiveness of paroxetine for treating bipolar depression, subjects were measured using the Hamilton depression scale with the results given below (based on data from a “Double-Blind, Placebo-Controlled Comparison of Imipramine and Paroxetine in the Treatment of Bipolar Depression,” by Nemeroff et al., American Journal of Psychiatry, Vol. 158, No. 6). Use a 0.05 significance level to test the claim that the treatment and placebo groups come from populations with the same mean. Assume equal population variances. [Use Treatment – Placebo]  
+H0: p = 0.1 versus p != 0.1
+
+
+
+```{r One prop HT}
+(tab1 <- table(C.df$Cereal=="OatBran", C.df$Cereal=="Cornflk"))
+
+oneprop.HT(tab1[1], sum(tab1), pmu = 0.10)
+```
+b. Construct an appropriate confidence interval that could be used as an equivalent to the test in part (a). [Use Cornflake – OatBran]. Explain your choice and interpret the interval. 
+
+
+
+ 6. In clinical experiments involving different groups of independent samples, it is important that the groups be similar in the important ways that affect the experiment. In an experiment designed to test the effectiveness of paroxetine for treating bipolar depression, subjects were measured using the Hamilton depression scale with the results given below (based on data from a “Double-Blind, Placebo-Controlled Comparison of Imipramine and Paroxetine in the Treatment of Bipolar Depression,” by Nemeroff et al., American Journal of Psychiatry, Vol. 158, No. 6). 
+ Use a 0.05 significance level to test the claim that the treatment and placebo groups come from populations with the same mean. Assume equal population variances. [Use Treatment – Placebo]  
 
 ```
 
