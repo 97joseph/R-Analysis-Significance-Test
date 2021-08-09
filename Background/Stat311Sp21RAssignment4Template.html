@@ -437,12 +437,12 @@ sd.CD^2/sd.CI^2</code></pre>
 # practice, you would make a choice based on your understanding
 # of diamond weights and go from there.
 
-# First interval is 95% using an un-pooled variance, both are
+# First interval is 1% using an un-pooled variance, both are
 # defaults 
-t.test(D.CD$Puzzle, D.CI$Puzzle)$conf.int</code></pre>
-<pre><code>## [1] 0.9687439 8.4561161
+t.test(D.CD$Puzzle, D.CI$Puzzle,conf.level=0.01)$conf.int</code></pre>
+<pre><code>## [1] 4.68876 4.73610
 ## attr(,&quot;conf.level&quot;)
-## [1] 0.95</code></pre>
+## [1] 0.01</code></pre>
 <pre class="r"><code># Same interval as above but with pooled variance
 t.test(D.CD$Puzzle, D.CI$Puzzle, var.equal=TRUE)$conf.int</code></pre>
 <pre><code>## [1] 1.093332 8.331528
@@ -450,18 +450,10 @@ t.test(D.CD$Puzzle, D.CI$Puzzle, var.equal=TRUE)$conf.int</code></pre>
 ## [1] 0.95</code></pre>
 <pre class="r"><code># Same two calls from above after removing the $conf.int at 
 # the end to see all the t.test output
-t.test(D.CD$Puzzle, D.CI$Puzzle)</code></pre>
-<pre><code>## 
-##  Welch Two Sample t-test
-## 
-## data:  D.CD$Puzzle and D.CI$Puzzle
-## t = 2.5026, df = 85.294, p-value = 0.01423
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  0.9687439 8.4561161
-## sample estimates:
-## mean of x mean of y 
-##  52.03158  47.31915</code></pre>
+t.test(D.CD$Puzzle, D.CI$Puzzle,conf.level=0.01)$conf.int</code></pre>
+<pre><code>## [1] 4.68876 4.73610
+## attr(,&quot;conf.level&quot;)
+## [1] 0.01</code></pre>
 <pre class="r"><code>t.test(D.CD$Puzzle, D.CI$Puzzle, var.equal=TRUE)</code></pre>
 <pre><code>## 
 ##  Two Sample t-test
@@ -474,15 +466,53 @@ t.test(D.CD$Puzzle, D.CI$Puzzle)</code></pre>
 ## sample estimates:
 ## mean of x mean of y 
 ##  52.03158  47.31915</code></pre>
+<p>(b)Test the claim that students with a preference for strawberry ice cream have higher puzzle scores than students that prefer chocolate ice cream. Use strawberry minus chocolate and a 1% significance level. Assume the population variances are not equal.</p>
+<pre class="r"><code># Test the claim that students with a preference for strawberry ice cream have higher puzzle scores than students that prefer chocolate ice cream. Use strawberry minus chocolate and a 1% significance level. Assume the population variances are not equal. 
+
+
+# Enter measured, then reported as stated in the problem statement
+# Add the paired=TRUE argument to let R know that the data are
+# matched pairs. Set the conf.level to 0.01
+t.test(IC.df$Flavor==&quot;1&quot;,IC.df$Flavor==&quot;3&quot;, paired=TRUE, 
+       conf.level = 0.01)$conf.int</code></pre>
+<pre><code>## [1] 0.1842395 0.1857605
+## attr(,&quot;conf.level&quot;)
+## [1] 0.01</code></pre>
 <ol start="3" style="list-style-type: decimal">
-<li><p>Using the oneprop.CI function in the R4 Tutorial, find the 98% confidence interval for the proportion of smokers in the birthweight data set. Assume large sample conditions are met.</p></li>
-<li><p>Consider birthweights for mothers that are smokers and nonsmokers. a. Create a function called twoprop.HT that uses a two-sample z test to test for the difference between two population proportions assuming independent samples. b. Test the claim that the proportion of low birthweight babies is higher for mothers that smoked (use smoked – did not smoke). Use a 5% significance level. Assume large sample conditions are met. c. Are the large sample conditions met for the test in (b)? Note, you can just look at the table values instead of doing any calculations. Do you think the hypothesis test results in</p></li>
+<li>Using the oneprop.CI function in the R4 Tutorial, find the 98% confidence interval for the proportion of smokers in the birthweight data set. Assume large sample conditions are met.</li>
+</ol>
+<pre class="r"><code># The three arguments passed to the function are
+# x = number of successes, n = total number of observations
+# and conf.level. We will default conf.level to 0.95.
+oneprop.CI &lt;- function(x, n, conf.level=0.95) {
+  phat &lt;- x/n
+  qhat &lt;- 1 - phat
+  se.phat &lt;- sqrt(phat*qhat/n) 
+  alphaO2 &lt;- (1 - conf.level)/2
+  zcrit &lt;- abs(qnorm(alphaO2))
+  LB &lt;- phat - (zcrit*(se.phat))
+  UB &lt;- phat + (zcrit*(se.phat))
+  result &lt;- cbind(phat = phat, Lower = LB, Upper = UB)
+  return(result)
+}</code></pre>
+<p>Find a 98% confidence interval for the proportion of smokers in the BirthWeight. Before we proceed, we should check the large sample conditions: n x phat &gt; 10 and n x qhat &gt; 10. We use phat and qhat because p unknown. First check that the large sample conditions hold.</p>
+<pre class="r"><code>tab1 &lt;- table(BW.df$Smoker)
+sum(tab1)*(tab1[1]/sum(tab1)) #nphat</code></pre>
+<pre><code>##  0 
+## 20</code></pre>
+<pre class="r"><code>sum(tab1)*(1-(tab1[1]/sum(tab1))) #n(1-phat) = nqhat</code></pre>
+<pre><code>##  0 
+## 22</code></pre>
+<pre class="r"><code>oneprop.CI(tab1[1], sum(tab1), conf.level=0.98)</code></pre>
+<pre><code>##        phat     Lower     Upper
+## 0 0.4761905 0.2969125 0.6554685</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Consider birthweights for mothers that are smokers and nonsmokers. a. Create a function called twoprop.HT that uses a two-sample z test to test for the difference between two population proportions assuming independent samples. b. Test the claim that the proportion of low birthweight babies is higher for mothers that smoked (use smoked – did not smoke). Use a 5% significance level. Assume large sample conditions are met. c. Are the large sample conditions met for the test in (b)? Note, you can just look at the table values instead of doing any calculations. Do you think the hypothesis test results in</li>
 </ol>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>are valid?</li>
 </ol>
-<pre><code>
-</code></pre>
+<p>We will write the function twoprop.CI to get the confidence interval for a the difference between two population proportions.</p>
 <ol start="5" style="list-style-type: decimal">
 <li>This problem was modified from here. A cross-over trial experiment was used to investigate whether eating oat bran lowered serum cholesterol levels. Twelve individuals were randomly assigned a diet that included either oat bran or corn flakes. After two weeks on the initial diet, serum cholesterol (mmol/L) was measured and then participants were “crossed-over” to the other diet. After two-weeks on the second diet, cholesterol levels were once again recorded. a. Using a 5% significance level, test the claim that a diet that includes oat bran decreases serum cholesterol. [Use Cornflk – OatBran] b. Construct an appropriate confidence interval that could be used as an equivalent to the test in part (a). [Use Cornflake – OatBran]. Explain your choice and interpret the interval.</li>
 </ol>
