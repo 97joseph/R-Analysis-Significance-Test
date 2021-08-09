@@ -375,7 +375,9 @@ summary {
 </div>
 
 
-<p>1.Read the ice cream, birthweight, and cholesterol data sets.</p>
+<p>ASSSIGNMENT</p>
+<p>EXPLORATORY DATA ANALYISIS 1.Read the ice cream, birthweight, and cholesterol data sets.</p>
+<p>The following fucntions reads the three datasets and displays their structures through the View() function</p>
 <pre class="r"><code>IC.df &lt;- read.csv(&quot;E:/DATA SCIENCE JOBS/R-Analysis Significance Test/Background/IceCream.csv&quot;, header=TRUE, as.is=TRUE)
 IC.df$Sex &lt;- as.factor(IC.df$Sex)
 IC.df$Flavor &lt;- as.factor(IC.df$Flavor)
@@ -390,6 +392,83 @@ View(BW.df)
 C.df &lt;- read.csv(&quot;E:/DATA SCIENCE JOBS/R-Analysis Significance Test/Background/Cholesterol.csv&quot;, header=TRUE, as.is=TRUE)
 View(C.df)
 C.df$Cereal &lt;- as.factor(C.df$Cereal)</code></pre>
+<ol style="list-style-type: decimal">
+<li>Find and interpret the 92% confidence interval for the population mean puzzle score.</li>
+</ol>
+<pre class="r"><code># Look at the t.test help file
+?t.test</code></pre>
+<pre><code>## starting httpd help server ... done</code></pre>
+<pre class="r"><code># First interval is 95%, which is the default if you do
+# not specify conf.level
+t.test(IC.df$Puzzle)$conf.int</code></pre>
+<pre><code>## [1] 50.90802 53.90198
+## attr(,&quot;conf.level&quot;)
+## [1] 0.95</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Hypothesis test for the difference between mean puzzle scores by ice cream type. a. Create two subsets of puzzle scores, one for students that favor strawberry ice cream and one for students that favor chocolate ice cream. b. Test the claim that students with a preference for strawberry ice cream have higher puzzle scores than students that prefer chocolate ice cream. Use strawberry minus chocolate and a 1% significance level. Assume the population variances are not equal. c. Do you think the statistical test results from part (b) have practical significance?</li>
+</ol>
+<pre class="r"><code># First get the right subset of data
+D.CD &lt;- filter(IC.df, Flavor == &quot;1&quot;)
+D.CI &lt;- filter(IC.df, Flavor == &quot;2&quot;)
+
+# Look at the samples sizes and samples SDs for each group 
+# to inform the decision for un-pooled or pooled variance.
+n.CD &lt;- nrow(D.CD)
+sd.CD &lt;- sd(D.CD$Puzzle)
+n.CI &lt;- nrow(D.CI)
+sd.CI &lt;- sd(D.CI$Puzzle)
+cbind(nCD = n.CD, SD.CD = sd.CD, nCI = n.CI, SD.CI = sd.CI)</code></pre>
+<pre><code>##      nCD    SD.CD nCI    SD.CI
+## [1,]  95 9.972785  47 10.83695</code></pre>
+<pre class="r"><code># The sample size for color D is smallish; the two sample
+# SDs are similar. This could go either way. If we pool, 
+# we will be giving a higher weight to the lower variance.
+# Checking our ROT gives us a ratio &lt; 3 (code shown below), 
+# so pooling is probably okay.
+
+sd.CD^2/sd.CI^2</code></pre>
+<pre><code>## [1] 0.8468745</code></pre>
+<pre class="r"><code># Using un-pooled would be most conservative. At the same time
+# pooling may be reasonable because we might expect the
+# population variances to be similar for Weight (would we expect
+# the variation in Weight to be different for different colors?).
+
+# We will run it both ways here so you can see the difference--in
+# practice, you would make a choice based on your understanding
+# of diamond weights and go from there.
+
+# First interval is 95% using an un-pooled variance, both are
+# defaults 
+t.test(D.CD$Puzzle, D.CI$Puzzle)$conf.int</code></pre>
+<pre><code>## [1] 0.9687439 8.4561161
+## attr(,&quot;conf.level&quot;)
+## [1] 0.95</code></pre>
+<pre class="r"><code># Same interval as above but with pooled variance
+t.test(D.CD$Puzzle, D.CI$Puzzle, var.equal=TRUE)$conf.int</code></pre>
+<pre><code>## [1] 1.093332 8.331528
+## attr(,&quot;conf.level&quot;)
+## [1] 0.95</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Using the oneprop.CI function in the R4 Tutorial, find the 98% confidence interval for the proportion of smokers in the birthweight data set. Assume large sample conditions are met.</p></li>
+<li><p>Consider birthweights for mothers that are smokers and nonsmokers. a. Create a function called twoprop.HT that uses a two-sample z test to test for the difference between two population proportions assuming independent samples. b. Test the claim that the proportion of low birthweight babies is higher for mothers that smoked (use smoked – did not smoke). Use a 5% significance level. Assume large sample conditions are met. c. Are the large sample conditions met for the test in (b)? Note, you can just look at the table values instead of doing any calculations. Do you think the hypothesis test results in</p></li>
+</ol>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>are valid?</li>
+</ol>
+<pre><code>
+</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>This problem was modified from here. A cross-over trial experiment was used to investigate whether eating oat bran lowered serum cholesterol levels. Twelve individuals were randomly assigned a diet that included either oat bran or corn flakes. After two weeks on the initial diet, serum cholesterol (mmol/L) was measured and then participants were “crossed-over” to the other diet. After two-weeks on the second diet, cholesterol levels were once again recorded. a. Using a 5% significance level, test the claim that a diet that includes oat bran decreases serum cholesterol. [Use Cornflk – OatBran] b. Construct an appropriate confidence interval that could be used as an equivalent to the test in part (a). [Use Cornflake – OatBran]. Explain your choice and interpret the interval.</li>
+</ol>
+<pre><code>
+
+
+</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>In clinical experiments involving different groups of independent samples, it is important that the groups be similar in the important ways that affect the experiment. In an experiment designed to test the effectiveness of paroxetine for treating bipolar depression, subjects were measured using the Hamilton depression scale with the results given below (based on data from a “Double-Blind, Placebo-Controlled Comparison of Imipramine and Paroxetine in the Treatment of Bipolar Depression,” by Nemeroff et al., American Journal of Psychiatry, Vol. 158, No. 6). Use a 0.05 significance level to test the claim that the treatment and placebo groups come from populations with the same mean. Assume equal population variances. [Use Treatment – Placebo]</li>
+</ol>
+<pre><code>
+</code></pre>
 
 
 
