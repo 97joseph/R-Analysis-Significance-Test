@@ -76,14 +76,21 @@ sd.CD^2/sd.CI^2
 # practice, you would make a choice based on your understanding
 # of diamond weights and go from there.
 
-# First interval is 95% using an un-pooled variance, both are
+# First interval is 1% using an un-pooled variance, both are
 # defaults 
-t.test(D.CD$Puzzle, D.CI$Puzzle)$conf.int
+t.test(D.CD$Puzzle, D.CI$Puzzle,conf.level=0.01)$conf.int
+
 
 # Same interval as above but with pooled variance
 t.test(D.CD$Puzzle, D.CI$Puzzle, var.equal=TRUE)$conf.int
 ```
+```{r Looking a df for un-pooled vs. pooled}
+# Same two calls from above after removing the $conf.int at 
+# the end to see all the t.test output
+t.test(D.CD$Puzzle, D.CI$Puzzle,conf.level=0.01)$conf.int
+t.test(D.CD$Puzzle, D.CI$Puzzle, var.equal=TRUE)
 
+```
 
 
 3. Using the oneprop.CI function in the R4 Tutorial, find the 98% confidence interval for the proportion of smokers in the birthweight data set. Assume large sample conditions are met.
