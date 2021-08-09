@@ -1,0 +1,575 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+ASSSIGNMENT
+
+EXPLORATORY DATA ANALYISIS 1.Read the ice cream, birthweight, and
+cholesterol data sets.
+
+The following fucntions reads the three datasets and displays their
+structures through the View() function
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{IC.df <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"E:/DATA SCIENCE JOBS/R-Analysis Significance Test/Background/IceCream.csv"}\NormalTok{, }\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{as.is=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{IC.df}\OperatorTok{$}\NormalTok{Sex <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(IC.df}\OperatorTok{$}\NormalTok{Sex)}
+\NormalTok{IC.df}\OperatorTok{$}\NormalTok{Flavor <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(IC.df}\OperatorTok{$}\NormalTok{Flavor)}
+\KeywordTok{View}\NormalTok{(IC.df)}
+\CommentTok{#}
+\NormalTok{BW.df <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"E:/DATA SCIENCE JOBS/R-Analysis Significance Test/Background/BirthWeight.csv"}\NormalTok{, }\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{as.is=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{BW.df}\OperatorTok{$}\NormalTok{Smoker <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(BW.df}\OperatorTok{$}\NormalTok{Smoker)}
+\NormalTok{BW.df}\OperatorTok{$}\NormalTok{BirthWt <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(BW.df}\OperatorTok{$}\NormalTok{BirthWt)}
+\NormalTok{BW.df}\OperatorTok{$}\NormalTok{MAgeGT35 <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(BW.df}\OperatorTok{$}\NormalTok{MAgeGT35)}
+\KeywordTok{View}\NormalTok{(BW.df)}
+\CommentTok{#}
+\NormalTok{C.df <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"E:/DATA SCIENCE JOBS/R-Analysis Significance Test/Background/Cholesterol.csv"}\NormalTok{, }\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{as.is=}\OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{View}\NormalTok{(C.df)}
+\NormalTok{C.df}\OperatorTok{$}\NormalTok{Cereal <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(C.df}\OperatorTok{$}\NormalTok{Cereal)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Find and interpret the 92\% confidence interval for the population
+  mean puzzle score.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Look at the t.test help file}
+\NormalTok{?t.test}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## starting httpd help server ... done
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# First interval is 95%, which is the default if you do}
+\CommentTok{# not specify conf.level}
+\KeywordTok{t.test}\NormalTok{(IC.df}\OperatorTok{$}\NormalTok{Puzzle)}\OperatorTok{$}\NormalTok{conf.int}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 50.90802 53.90198
+## attr(,"conf.level")
+## [1] 0.95
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Hypothesis test for the difference between mean puzzle scores by ice
+  cream type. a. Create two subsets of puzzle scores, one for students
+  that favor strawberry ice cream and one for students that favor
+  chocolate ice cream. b. Test the claim that students with a preference
+  for strawberry ice cream have higher puzzle scores than students that
+  prefer chocolate ice cream. Use strawberry minus chocolate and a 1\%
+  significance level. Assume the population variances are not equal.
+  c.~Do you think the statistical test results from part (b) have
+  practical significance?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# First get the right subset of data}
+\NormalTok{D.CD <-}\StringTok{ }\KeywordTok{filter}\NormalTok{(IC.df, Flavor }\OperatorTok{==}\StringTok{ "1"}\NormalTok{)}
+\NormalTok{D.CI <-}\StringTok{ }\KeywordTok{filter}\NormalTok{(IC.df, Flavor }\OperatorTok{==}\StringTok{ "2"}\NormalTok{)}
+
+\CommentTok{# Look at the samples sizes and samples SDs for each group }
+\CommentTok{# to inform the decision for un-pooled or pooled variance.}
+\NormalTok{n.CD <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(D.CD)}
+\NormalTok{sd.CD <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(D.CD}\OperatorTok{$}\NormalTok{Puzzle)}
+\NormalTok{n.CI <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(D.CI)}
+\NormalTok{sd.CI <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(D.CI}\OperatorTok{$}\NormalTok{Puzzle)}
+\KeywordTok{cbind}\NormalTok{(}\DataTypeTok{nCD =}\NormalTok{ n.CD, }\DataTypeTok{SD.CD =}\NormalTok{ sd.CD, }\DataTypeTok{nCI =}\NormalTok{ n.CI, }\DataTypeTok{SD.CI =}\NormalTok{ sd.CI)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      nCD    SD.CD nCI    SD.CI
+## [1,]  95 9.972785  47 10.83695
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# The sample size for color D is smallish; the two sample}
+\CommentTok{# SDs are similar. This could go either way. If we pool, }
+\CommentTok{# we will be giving a higher weight to the lower variance.}
+\CommentTok{# Checking our ROT gives us a ratio < 3 (code shown below), }
+\CommentTok{# so pooling is probably okay.}
+
+\NormalTok{sd.CD}\OperatorTok{^}\DecValTok{2}\OperatorTok{/}\NormalTok{sd.CI}\OperatorTok{^}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.8468745
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Using un-pooled would be most conservative. At the same time}
+\CommentTok{# pooling may be reasonable because we might expect the}
+\CommentTok{# population variances to be similar for Weight (would we expect}
+\CommentTok{# the variation in Weight to be different for different colors?).}
+
+\CommentTok{# We will run it both ways here so you can see the difference--in}
+\CommentTok{# practice, you would make a choice based on your understanding}
+\CommentTok{# of diamond weights and go from there.}
+
+\CommentTok{# First interval is 1% using an un-pooled variance, both are}
+\CommentTok{# defaults }
+\KeywordTok{t.test}\NormalTok{(D.CD}\OperatorTok{$}\NormalTok{Puzzle, D.CI}\OperatorTok{$}\NormalTok{Puzzle,}\DataTypeTok{conf.level=}\FloatTok{0.01}\NormalTok{)}\OperatorTok{$}\NormalTok{conf.int}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4.68876 4.73610
+## attr(,"conf.level")
+## [1] 0.01
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Same interval as above but with pooled variance}
+\KeywordTok{t.test}\NormalTok{(D.CD}\OperatorTok{$}\NormalTok{Puzzle, D.CI}\OperatorTok{$}\NormalTok{Puzzle, }\DataTypeTok{var.equal=}\OtherTok{TRUE}\NormalTok{)}\OperatorTok{$}\NormalTok{conf.int}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.093332 8.331528
+## attr(,"conf.level")
+## [1] 0.95
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Same two calls from above after removing the $conf.int at }
+\CommentTok{# the end to see all the t.test output}
+\KeywordTok{t.test}\NormalTok{(D.CD}\OperatorTok{$}\NormalTok{Puzzle, D.CI}\OperatorTok{$}\NormalTok{Puzzle,}\DataTypeTok{conf.level=}\FloatTok{0.01}\NormalTok{)}\OperatorTok{$}\NormalTok{conf.int}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4.68876 4.73610
+## attr(,"conf.level")
+## [1] 0.01
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t.test}\NormalTok{(D.CD}\OperatorTok{$}\NormalTok{Puzzle, D.CI}\OperatorTok{$}\NormalTok{Puzzle, }\DataTypeTok{var.equal=}\OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Two Sample t-test
+## 
+## data:  D.CD$Puzzle and D.CI$Puzzle
+## t = 2.5743, df = 140, p-value = 0.01108
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  1.093332 8.331528
+## sample estimates:
+## mean of x mean of y 
+##  52.03158  47.31915
+\end{verbatim}
+
+(b)Test the claim that students with a preference for strawberry ice
+cream have higher puzzle scores than students that prefer chocolate ice
+cream. Use strawberry minus chocolate and a 1\% significance level.
+Assume the population variances are not equal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Test the claim that students with a preference for strawberry ice cream have higher puzzle scores than students that prefer chocolate ice cream. Use strawberry minus chocolate and a 1% significance level. Assume the population variances are not equal. }
+
+
+\CommentTok{# Enter measured, then reported as stated in the problem statement}
+\CommentTok{# Add the paired=TRUE argument to let R know that the data are}
+\CommentTok{# matched pairs. Set the conf.level to 0.01}
+\KeywordTok{t.test}\NormalTok{(IC.df}\OperatorTok{$}\NormalTok{Flavor}\OperatorTok{==}\StringTok{"1"}\NormalTok{,IC.df}\OperatorTok{$}\NormalTok{Flavor}\OperatorTok{==}\StringTok{"3"}\NormalTok{, }\DataTypeTok{paired=}\OtherTok{TRUE}\NormalTok{, }
+       \DataTypeTok{conf.level =} \FloatTok{0.01}\NormalTok{)}\OperatorTok{$}\NormalTok{conf.int}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.1842395 0.1857605
+## attr(,"conf.level")
+## [1] 0.01
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Using the oneprop.CI function in the R4 Tutorial, find the 98\%
+  confidence interval for the proportion of smokers in the birthweight
+  data set. Assume large sample conditions are met.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# The three arguments passed to the function are}
+\CommentTok{# x = number of successes, n = total number of observations}
+\CommentTok{# and conf.level. We will default conf.level to 0.95.}
+\NormalTok{oneprop.CI <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, n, }\DataTypeTok{conf.level=}\FloatTok{0.95}\NormalTok{) \{}
+\NormalTok{  phat <-}\StringTok{ }\NormalTok{x}\OperatorTok{/}\NormalTok{n}
+\NormalTok{  qhat <-}\StringTok{ }\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{phat}
+\NormalTok{  se.phat <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(phat}\OperatorTok{*}\NormalTok{qhat}\OperatorTok{/}\NormalTok{n) }
+\NormalTok{  alphaO2 <-}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{conf.level)}\OperatorTok{/}\DecValTok{2}
+\NormalTok{  zcrit <-}\StringTok{ }\KeywordTok{abs}\NormalTok{(}\KeywordTok{qnorm}\NormalTok{(alphaO2))}
+\NormalTok{  LB <-}\StringTok{ }\NormalTok{phat }\OperatorTok{-}\StringTok{ }\NormalTok{(zcrit}\OperatorTok{*}\NormalTok{(se.phat))}
+\NormalTok{  UB <-}\StringTok{ }\NormalTok{phat }\OperatorTok{+}\StringTok{ }\NormalTok{(zcrit}\OperatorTok{*}\NormalTok{(se.phat))}
+\NormalTok{  result <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\DataTypeTok{phat =}\NormalTok{ phat, }\DataTypeTok{Lower =}\NormalTok{ LB, }\DataTypeTok{Upper =}\NormalTok{ UB)}
+  \KeywordTok{return}\NormalTok{(result)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Find a 98\% confidence interval for the proportion of smokers in the
+BirthWeight. Before we proceed, we should check the large sample
+conditions: n x phat \textgreater{} 10 and n x qhat \textgreater{} 10.
+We use phat and qhat because p unknown. First check that the large
+sample conditions hold.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tab1 <-}\StringTok{ }\KeywordTok{table}\NormalTok{(BW.df}\OperatorTok{$}\NormalTok{Smoker)}
+\KeywordTok{sum}\NormalTok{(tab1)}\OperatorTok{*}\NormalTok{(tab1[}\DecValTok{1}\NormalTok{]}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(tab1)) }\CommentTok{#nphat}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  0 
+## 20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sum}\NormalTok{(tab1)}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{-}\NormalTok{(tab1[}\DecValTok{1}\NormalTok{]}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(tab1))) }\CommentTok{#n(1-phat) = nqhat}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  0 
+## 22
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{oneprop.CI}\NormalTok{(tab1[}\DecValTok{1}\NormalTok{], }\KeywordTok{sum}\NormalTok{(tab1), }\DataTypeTok{conf.level=}\FloatTok{0.98}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        phat     Lower     Upper
+## 0 0.4761905 0.2969125 0.6554685
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Consider birthweights for mothers that are smokers and nonsmokers. a.
+  Create a function called twoprop.HT that uses a two-sample z test to
+  test for the difference between two population proportions assuming
+  independent samples.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\item
+  Test the claim that the proportion of low birthweight babies is higher
+  for mothers that smoked (use smoked -- did not smoke). Use a 5\%
+  significance level. Assume large sample conditions are met.
+\item
+  Are the large sample conditions met for the test in (b)? Note, you can
+  just look at the table values instead of doing any calculations. Do
+  you think the hypothesis test results in(b) are valid?
+\end{enumerate}
+
+We will write the function twoprop.CI to get the confidence interval for
+a the difference between two population proportions.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# The five arguments passed to the function are}
+\CommentTok{# x1 = number of successes in sample 1, n1 = total number of observations}
+\CommentTok{# in sample 1, x2 = number of successes in sample 2,}
+\CommentTok{# n2 = total number of observations in sample 2, and }
+\CommentTok{# and conf.level. We will default conf.level to 0.95.}
+\NormalTok{twoprop.CI <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x1, n1, x2, n2, }\DataTypeTok{conf.level=}\FloatTok{0.05}\NormalTok{) \{}
+\NormalTok{  phat1 <-}\StringTok{ }\NormalTok{x1}\OperatorTok{/}\NormalTok{n1}
+\NormalTok{  qhat1 <-}\StringTok{ }\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{phat1}
+\NormalTok{  phat2<-}\StringTok{ }\NormalTok{x2}\OperatorTok{/}\NormalTok{n2}
+\NormalTok{  qhat2 <-}\StringTok{ }\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{phat2 }
+\NormalTok{  diff.phat <-}\StringTok{ }\NormalTok{phat1 }\OperatorTok{-}\StringTok{ }\NormalTok{phat2}
+\NormalTok{  se.phat <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{((phat1}\OperatorTok{*}\NormalTok{qhat1}\OperatorTok{/}\NormalTok{n1) }\OperatorTok{+}\StringTok{ }\NormalTok{(phat2}\OperatorTok{*}\NormalTok{qhat2}\OperatorTok{/}\NormalTok{n2))}
+\NormalTok{  alphaO2 <-}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{conf.level)}\OperatorTok{/}\DecValTok{2}
+\NormalTok{  zcrit <-}\StringTok{ }\KeywordTok{abs}\NormalTok{(}\KeywordTok{qnorm}\NormalTok{(alphaO2))}
+\NormalTok{  LB <-}\StringTok{ }\NormalTok{diff.phat }\OperatorTok{-}\StringTok{ }\NormalTok{(zcrit}\OperatorTok{*}\NormalTok{(se.phat))}
+\NormalTok{  UB <-}\StringTok{ }\NormalTok{diff.phat }\OperatorTok{+}\StringTok{ }\NormalTok{(zcrit}\OperatorTok{*}\NormalTok{(se.phat))}
+\NormalTok{  result <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\DataTypeTok{diff =}\NormalTok{ diff.phat, }\DataTypeTok{Lower =}\NormalTok{ LB, }\DataTypeTok{Upper =}\NormalTok{ UB)}
+  \KeywordTok{return}\NormalTok{(result)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Before we proceed, we should check the large sample conditions: n1 x
+phat1 \textgreater{} 10, n1 x qhat1 \textgreater10, n2 x phat2
+\textgreater{} 10, n2 x qhat2 \textgreater{} 10. We will define sample 1
+as VVS1 and sample 2 as VVS2. We will consider H colors successes and
+all other colors failures within VVS1 and VVS2.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(tab2 <-}\StringTok{ }\KeywordTok{table}\NormalTok{(BW.df}\OperatorTok{$}\NormalTok{Smoker}\OperatorTok{==}\StringTok{"0"}\NormalTok{, BW.df}\OperatorTok{$}\NormalTok{Smoker}\OperatorTok{==}\StringTok{"1"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        
+##         FALSE TRUE
+##   FALSE     0   22
+##   TRUE     20    0
+\end{verbatim}
+
+The large sample condition holds so we proceed with the confidence 5\%
+interval.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  This problem was modified from here. A cross-over trial experiment was
+  used to investigate whether eating oat bran lowered serum cholesterol
+  levels. Twelve individuals were randomly assigned a diet that included
+  either oat bran or corn flakes. After two weeks on the initial diet,
+  serum cholesterol (mmol/L) was measured and then participants were
+  ``crossed-over'' to the other diet. After two-weeks on the second
+  diet, cholesterol levels were once again recorded.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  Using a 5\% significance level, test the claim that a diet that
+  includes oat bran decreases serum cholesterol. {[}Use Cornflk --
+  OatBran{]}
+\end{enumerate}
+
+We will write our own function for a HT for a single population
+proportion.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# The three arguments passed to the function are}
+\CommentTok{# x = number of successes, n = total number of observations}
+\CommentTok{# and conf.level. We will default conf.level to 0.95.}
+\NormalTok{oneprop.HT <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, n, }\DataTypeTok{pmu=}\DecValTok{0}\NormalTok{, }\DataTypeTok{alternative=}\StringTok{"two.sided"}\NormalTok{) \{}
+\NormalTok{  phat <-}\StringTok{ }\NormalTok{x}\OperatorTok{/}\NormalTok{n}
+\NormalTok{  se.phat <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(pmu}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{-}\NormalTok{pmu)}\OperatorTok{/}\NormalTok{n) }
+\NormalTok{  z.score <-}\StringTok{ }\NormalTok{(phat }\OperatorTok{-}\StringTok{ }\NormalTok{pmu)}\OperatorTok{/}\NormalTok{se.phat}
+\NormalTok{  p.value <-}\StringTok{ }\DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(}\KeywordTok{abs}\NormalTok{(z.score)) }\CommentTok{#upper tail}
+  \ControlFlowTok{if}\NormalTok{ (alternative }\OperatorTok{==}\StringTok{ "two.sided"}\NormalTok{) p.value =}\StringTok{ }\DecValTok{2}\OperatorTok{*}\NormalTok{p.value}
+\NormalTok{  result <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\DataTypeTok{phat =}\NormalTok{ phat, }\DataTypeTok{zStat =}\NormalTok{ z.score, }\DataTypeTok{pValue =}\NormalTok{ p.value)}
+  \KeywordTok{return}\NormalTok{(result)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Let's conduct a hypothesis test to determine if the population
+proportion of D colored diamonds is different than 10\%, using a 1\%
+significance level. Since this is a hypothesis test, the large enough
+conditions that must hold are n x p0 \textgreater{} 10 and n x q0
+\textgreater{} 10. Here n = 308 and p0 = 0.10. Clearly n x p0
+\textgreater{} 10, which means n x q0 \textgreater{} 10. We can continue
+since the large sample conditions are met.
+
+H0: p = 0.1 versus p != 0.1
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(tab1 <-}\StringTok{ }\KeywordTok{table}\NormalTok{(C.df}\OperatorTok{$}\NormalTok{Cereal}\OperatorTok{==}\StringTok{"OatBran"}\NormalTok{, C.df}\OperatorTok{$}\NormalTok{Cereal}\OperatorTok{==}\StringTok{"Cornflk"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        
+##         FALSE TRUE
+##   FALSE     0   12
+##   TRUE     12    0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{oneprop.HT}\NormalTok{(tab1[}\DecValTok{1}\NormalTok{], }\KeywordTok{sum}\NormalTok{(tab1), }\DataTypeTok{pmu =} \FloatTok{0.10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      phat     zStat    pValue
+## [1,]    0 -1.632993 0.1024704
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Construct an appropriate confidence interval that could be used as an
+  equivalent to the test in part (a). {[}Use Cornflake -- OatBran{]}.
+  Explain your choice and interpret the interval.
+\end{enumerate}
+
+\begin{verbatim}
+As background—this is not the main analysis—it helps to calculate summary statistics for each sample separately.  Let sample 1 represent CORNFLK values and let sample 2 represent OATBRAN values. Using a calculator or computer, we determine: 
+ 
+    𝑥𝑥̅1= 4.444     s1 = 0.9688     n1 = 14 
+    𝑥𝑥̅2= 4.081     s2 = 1.0570     n2 = 14 
+Interval estimation  The standard point “estimate ± margin of error” approach is used to calculate the confidence interval. The (1 – α)100% CI for µd =   𝑥𝑥̅𝑑𝑑±𝑡𝑡1−𝛼𝛼 2,𝑛𝑛−1∙𝑆𝑆𝑆𝑆𝑆𝑆𝑑𝑑  where t1-α/2, n-1 is the t percentile with n – 1 df for (1 – α)100% confidence [from the t table] and the standard error of the mean difference 𝑆𝑆𝑆𝑆𝑆𝑆𝑑𝑑=𝑠𝑠𝑑𝑑 √𝑛𝑛 .  Illustration. To determine and interpret the 95% CI for µd , df = n – 1 = 14 – 1 = 13. For 95% confidence, use t .975,13= 2.16 [from the t table]. Use the nd and sd determined earlier in this chapter to calculate 𝑆𝑆𝑆𝑆𝑆𝑆𝑑𝑑=0.4060 √14  = 0.1085.  The 95% CI for 𝜇𝜇𝑑𝑑 = 𝑥𝑥̅𝑑𝑑±𝑡𝑡1−𝛼𝛼 2,𝑛𝑛−1∙𝑆𝑆𝑆𝑆𝑆𝑆𝑑𝑑 = 0.3 629 ± 2.16 ∙ 0.1085 = 0.3629 ± 0.2344 = (0.129, 0.597) mmol/l.
+Interpretation:  This CI is trying to capture 𝜇𝜇𝑑𝑑, not  𝑥𝑥̅𝑑𝑑.  The margin of error is ±0.23. We consider the full extent of the interval from its lower limit (0.129) to its upper limit (0.597).  
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  In clinical experiments involving different groups of independent
+  samples, it is important that the groups be similar in the important
+  ways that affect the experiment. In an experiment designed to test the
+  effectiveness of paroxetine for treating bipolar depression, subjects
+  were measured using the Hamilton depression scale with the results
+  given below (based on data from a ``Double-Blind, Placebo-Controlled
+  Comparison of Imipramine and Paroxetine in the Treatment of Bipolar
+  Depression,'' by Nemeroff et al., American Journal of Psychiatry, Vol.
+  158, No.~6). Use a 0.05 significance level to test the claim that the
+  treatment and placebo groups come from populations with the same mean.
+  Assume equal population variances. {[}Use Treatment -- Placebo{]}
+\end{enumerate}
+
+\begin{verbatim}
+Paroxetine patients reported greater personality change than did placebo patients, even after controlling for depression improvement (p≤.002). The advantage of paroxetine over placebo in antidepressant efficacy was no longer significant after controlling for change in personality (p≥.14).
+Paroxetine patients reported 6.8 times as much change on neuroticism and 3.5 times as much change on extraversion as placebo patients matched for depression improvement. Although placebo patients exhibited substantial depression improvement (−1.2 SD, p<.001), they reported little change on neuroticism (−0.18 SD, p=.08) or extraversion (0.08 SD, p=.50).
+CT produced greater personality change than placebo (p≤.01); but its advantage on neuroticism was no longer significant after controlling for depression (p=.14). Neuroticism reduction during treatment predicted lower relapse rates among paroxetine responders (p=.003), but not among CT responders (p=.86).
+\end{verbatim}
+
+\end{document}

@@ -1,25 +1,18 @@
 ---
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ASSSIGNMENT
-```{r setup, include=FALSE}
-library(knitr)
-library(dplyr)
-library(ggplot2)
-library(BSDA)
-source("Functions.R")
-knitr::opts_chunk$set(echo = TRUE)
-SHOW_SOLUTIONS = TRUE
-```
+
 EXPLORATORY DATA ANALYISIS
 1.Read the ice cream, birthweight, and cholesterol data sets.
 
 The following fucntions reads the three datasets and displays their structures through the View() function
 
-```{r, eval=TRUE}
+
+```r
 IC.df <- read.csv("E:/DATA SCIENCE JOBS/R-Analysis Significance Test/Background/IceCream.csv", header=TRUE, as.is=TRUE)
 IC.df$Sex <- as.factor(IC.df$Sex)
 IC.df$Flavor <- as.factor(IC.df$Flavor)
@@ -38,20 +31,33 @@ C.df$Cereal <- as.factor(C.df$Cereal)
 1. Find and interpret the 92% confidence interval for the population mean puzzle score.
 
 
-```{r t test for a single mean}
+
+```r
 # Look at the t.test help file
 ?t.test
+```
 
+```
+## starting httpd help server ... done
+```
+
+```r
 # First interval is 95%, which is the default if you do
 # not specify conf.level
 t.test(IC.df$Puzzle)$conf.int
+```
 
+```
+## [1] 50.90802 53.90198
+## attr(,"conf.level")
+## [1] 0.95
 ```
 
 
 
 2. Hypothesis test for the difference between mean puzzle scores by ice cream type. a. Create two subsets of puzzle scores, one for students that favor strawberry ice cream and one for students that favor chocolate ice cream. b. Test the claim that students with a preference for strawberry ice cream have higher puzzle scores than students that prefer chocolate ice cream. Use strawberry minus chocolate and a 1% significance level. Assume the population variances are not equal. c. Do you think the statistical test results from part (b) have practical significance? 
-```{r t test for two means, independent samples}
+
+```r
 # First get the right subset of data
 D.CD <- filter(IC.df, Flavor == "1")
 D.CI <- filter(IC.df, Flavor == "2")
@@ -63,7 +69,14 @@ sd.CD <- sd(D.CD$Puzzle)
 n.CI <- nrow(D.CI)
 sd.CI <- sd(D.CI$Puzzle)
 cbind(nCD = n.CD, SD.CD = sd.CD, nCI = n.CI, SD.CI = sd.CI)
+```
 
+```
+##      nCD    SD.CD nCI    SD.CI
+## [1,]  95 9.972785  47 10.83695
+```
+
+```r
 # The sample size for color D is smallish; the two sample
 # SDs are similar. This could go either way. If we pool, 
 # we will be giving a higher weight to the lower variance.
@@ -71,7 +84,13 @@ cbind(nCD = n.CD, SD.CD = sd.CD, nCI = n.CI, SD.CI = sd.CI)
 # so pooling is probably okay.
 
 sd.CD^2/sd.CI^2
+```
 
+```
+## [1] 0.8468745
+```
+
+```r
 # Using un-pooled would be most conservative. At the same time
 # pooling may be reasonable because we might expect the
 # population variances to be similar for Weight (would we expect
@@ -84,26 +103,63 @@ sd.CD^2/sd.CI^2
 # First interval is 1% using an un-pooled variance, both are
 # defaults 
 t.test(D.CD$Puzzle, D.CI$Puzzle,conf.level=0.01)$conf.int
+```
 
+```
+## [1] 4.68876 4.73610
+## attr(,"conf.level")
+## [1] 0.01
+```
 
+```r
 # Same interval as above but with pooled variance
 t.test(D.CD$Puzzle, D.CI$Puzzle, var.equal=TRUE)$conf.int
 ```
 
+```
+## [1] 1.093332 8.331528
+## attr(,"conf.level")
+## [1] 0.95
+```
 
 
-```{r Looking a df for un-pooled vs. pooled}
+
+
+```r
 # Same two calls from above after removing the $conf.int at 
 # the end to see all the t.test output
 t.test(D.CD$Puzzle, D.CI$Puzzle,conf.level=0.01)$conf.int
-t.test(D.CD$Puzzle, D.CI$Puzzle, var.equal=TRUE)
+```
 
+```
+## [1] 4.68876 4.73610
+## attr(,"conf.level")
+## [1] 0.01
+```
+
+```r
+t.test(D.CD$Puzzle, D.CI$Puzzle, var.equal=TRUE)
+```
+
+```
+## 
+## 	Two Sample t-test
+## 
+## data:  D.CD$Puzzle and D.CI$Puzzle
+## t = 2.5743, df = 140, p-value = 0.01108
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  1.093332 8.331528
+## sample estimates:
+## mean of x mean of y 
+##  52.03158  47.31915
 ```
 
 (b)Test the claim that students with a preference for strawberry ice cream have higher puzzle scores than students that prefer chocolate ice cream. Use strawberry minus chocolate and a 1% significance level. Assume the population variances are not equal. 
 
 
-```{r}
+
+```r
 # Test the claim that students with a preference for strawberry ice cream have higher puzzle scores than students that prefer chocolate ice cream. Use strawberry minus chocolate and a 1% significance level. Assume the population variances are not equal. 
 
 
@@ -114,9 +170,16 @@ t.test(IC.df$Flavor=="1",IC.df$Flavor=="3", paired=TRUE,
        conf.level = 0.01)$conf.int
 ```
 
+```
+## [1] 0.1842395 0.1857605
+## attr(,"conf.level")
+## [1] 0.01
+```
+
 3. Using the oneprop.CI function in the R4 Tutorial, find the 98% confidence interval for the proportion of smokers in the birthweight data set. Assume large sample conditions are met.
 
-```{r oneprop.CI}
+
+```r
 # The three arguments passed to the function are
 # x = number of successes, n = total number of observations
 # and conf.level. We will default conf.level to 0.95.
@@ -133,15 +196,35 @@ oneprop.CI <- function(x, n, conf.level=0.95) {
 }
 ```
 Find a 98% confidence interval for the proportion of  smokers in the BirthWeight. Before we proceed, we should check the large sample conditions: n x phat > 10 and n x qhat > 10. We use phat and qhat because p unknown. First check that the large sample conditions hold.
-```{r Check conditions 1 prop}
+
+```r
 tab1 <- table(BW.df$Smoker)
 sum(tab1)*(tab1[1]/sum(tab1)) #nphat
+```
+
+```
+##  0 
+## 20
+```
+
+```r
 sum(tab1)*(1-(tab1[1]/sum(tab1))) #n(1-phat) = nqhat
 ```
 
+```
+##  0 
+## 22
+```
 
-```{r Single Prop CI}
+
+
+```r
 oneprop.CI(tab1[1], sum(tab1), conf.level=0.98)
+```
+
+```
+##        phat     Lower     Upper
+## 0 0.4761905 0.2969125 0.6554685
 ```
 
 
@@ -155,7 +238,8 @@ c. Are the large sample conditions met for the test in (b)? Note, you can just l
 We will write the function twoprop.CI to get the confidence interval for a the difference between two population proportions. 
 
 
-```{r twoprop.CI}
+
+```r
 # The five arguments passed to the function are
 # x1 = number of successes in sample 1, n1 = total number of observations
 # in sample 1, x2 = number of successes in sample 2,
@@ -177,10 +261,16 @@ twoprop.CI <- function(x1, n1, x2, n2, conf.level=0.05) {
 }
 ```
 Before we proceed, we should check the large sample conditions: n1 x phat1 > 10, n1 x qhat1 >10, n2 x phat2 > 10, n2 x qhat2 > 10. We will define sample 1 as VVS1 and sample 2 as VVS2. We will consider H colors successes and all other colors failures within VVS1 and VVS2.
-```{r Check conditions 2 samples}
+
+```r
 (tab2 <- table(BW.df$Smoker=="0", BW.df$Smoker=="1"))
+```
 
-
+```
+##        
+##         FALSE TRUE
+##   FALSE     0   22
+##   TRUE     20    0
 ```
 The large sample condition holds so we proceed with the confidence 5% interval.
 
@@ -193,7 +283,8 @@ a. Using a 5% significance level, test the claim that a diet that includes oat b
 
 We will write our own function for a HT for a single population proportion.
 
-```{r oneprop.HT}
+
+```r
 # The three arguments passed to the function are
 # x = number of successes, n = total number of observations
 # and conf.level. We will default conf.level to 0.95.
@@ -213,10 +304,25 @@ H0: p = 0.1 versus p != 0.1
 
 
 
-```{r One prop HT}
-(tab1 <- table(C.df$Cereal=="OatBran", C.df$Cereal=="Cornflk"))
 
+```r
+(tab1 <- table(C.df$Cereal=="OatBran", C.df$Cereal=="Cornflk"))
+```
+
+```
+##        
+##         FALSE TRUE
+##   FALSE     0   12
+##   TRUE     12    0
+```
+
+```r
 oneprop.HT(tab1[1], sum(tab1), pmu = 0.10)
+```
+
+```
+##      phat     zStat    pValue
+## [1,]    0 -1.632993 0.1024704
 ```
 b. Construct an appropriate confidence interval that could be used as an equivalent to the test in part (a). [Use Cornflake – OatBran]. Explain your choice and interpret the interval. 
 
